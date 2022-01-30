@@ -1,7 +1,13 @@
 import AppLoading from 'expo-app-loading';
-import { StyleSheet, Text, View, StatusBar } from 'react-native';
+import { Platform, StyleSheet, Text, View, Image, StatusBar, Dimensions } from 'react-native';
 import { useFonts } from 'expo-font';
 import { Themes } from './assets/Themes';
+import { shadowOffset } from 'react-native/Libraries/Components/View/ReactNativeStyleAttributes';
+import symbolicateStackTrace from 'react-native/Libraries/Core/Devtools/symbolicateStackTrace';
+
+import NavComp from './Components/Navigation'
+import BodyComp from './Components/Body'
+import BottomBarComp from './Components/BottomBar'
 
 export default function App() {
   let [fontsLoaded] = useFonts({
@@ -13,31 +19,23 @@ export default function App() {
   StatusBar.setBarStyle(Themes.light.statusBar);
   /* ^Don't mind/edit this one either unless you decide to do the dark theme one, in that case, you will have to change it accordingly*/
 
-  /* insert your code here */
-
   return (
-    <View style={styles.container}>
-      <Text
-        style={{
-          fontFamily: 'Sydney', // test to see if the font is loaded, feel free to remove this
-        }}>
-        Open up App.js to start working on your app!
-      </Text>
-      <Text
-        style={{
-          fontFamily: 'Sydney-Bold', // test to see if the font is loaded, feel free to remove this
-        }}>
-        ~Good luck~
-      </Text>
+    <View style={styles.background}>
+      <View style={styles.topBar}></View>
+      <NavComp></NavComp>
+      <BodyComp></BodyComp>
+      <BottomBarComp></BottomBarComp>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
+  background: {
     flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
+    backgroundColor: Themes.light.bg,
   },
+  topBar: {
+    height: Platform.OS === 'ios' ? 31 : 44,
+    backgroundColor: 'grey'
+  }
 });
